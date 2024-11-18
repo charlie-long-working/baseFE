@@ -1,0 +1,6 @@
+:root {
+    --main-bg-color: linear-gradient(to right, #F8fdfe, #f7fcfb);
+    --main-item-color: linear-gradient(45deg, #21B7DF, #7fd6bb);
+    --main-text-color: #575757;
+    --link-text-color: #61C6EC;
+}

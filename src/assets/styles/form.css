@@ -1,0 +1,94 @@
+.form-wrapper {
+  width: 30%;
+}
+
+.custom-form {
+  margin-top: 32px;
+}
+
+.custom-form__otp {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.custom-form__otp input {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.custom-form input,
+.custom-form .form-control:valid {
+  border: 2px solid #e6e7e8;
+  border-radius: 8px;
+}
+
+.custom-form input:focus,
+.custom-form .form-control:valid:focus,
+.custom-form .form-control:invalid:focus {
+  color: black;
+  background: var(--main-item-color);
+  background-clip: content-box;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(white, white) padding-box,
+    var(--main-item-color) border-box;
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-form .form-control:invalid,
+.custom-form .form-control:valid {
+  background-image: none;
+}
+
+.custom-form input {
+  color: black;
+}
+
+.custom-form input::placeholder {
+  font-size: smaller;
+  font-weight: lighter;
+}
+
+.custom-form .password-icon {
+  position: absolute;
+  right: 10px;
+  top: 23%;
+  cursor: pointer;
+  color: #5be5a6;
+  z-index: 1;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  color: white;
+  background: var(--main-item-color);
+  border: none;
+  margin-top: 32px;
+}
+
+.addon-text {
+  font-size: smaller;
+  float: right;
+  color: var(--link-text-color);
+}
+
+.addon-text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .form-wrapper {
+    width: 100%;
+    padding: 14px;
+  }
+}
