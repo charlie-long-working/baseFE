@@ -2,10 +2,17 @@ import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { errorFormValidation } from '../../constants';
+import { signupUser } from '../../redux/slices/authSlice';
+import { selectIsLoading } from '../../redux/selectors/authSelectors';
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [validated, setValidated] = useState(false);
 
@@ -19,8 +26,12 @@ const SignUp = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    } else {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      dispatch(signupUser(formData));
     }
-    console.log(form.checkValidity());
 
     setValidated(true);
   };
@@ -38,7 +49,12 @@ const SignUp = () => {
       >
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" placeholder="Enter your Name" required />
+          <Form.Control
+            name="name"
+            type="text"
+            placeholder="Enter your Name"
+            required
+          />
           <Form.Control.Feedback type="invalid">
             {errorFormValidation.name}
           </Form.Control.Feedback>
@@ -46,7 +62,12 @@ const SignUp = () => {
 
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter your email" required />
+          <Form.Control
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            required
+          />
           <Form.Control.Feedback type="invalid">
             {errorFormValidation.email}
           </Form.Control.Feedback>
@@ -58,6 +79,7 @@ const SignUp = () => {
             <Form.Control
               type={isShowPassword ? 'text' : 'password'}
               placeholder="Enter your password"
+              name="password"
               required
             />
             <span onClick={handleShowPassword} className="password-icon">
@@ -78,7 +100,7 @@ const SignUp = () => {
           Change your password
         </span>
 
-        <Button className="submit-btn" type="submit">
+        <Button disabled={isLoading} className="submit-btn" type="submit">
           Get Started
         </Button>
       </Form>

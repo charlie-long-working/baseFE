@@ -22,5 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# ESLint và Prettier
+# ESLint and Prettier
 .eslintcache
+
+# .env
+.env

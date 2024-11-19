@@ -3,9 +3,16 @@ import { Button, Form } from 'react-bootstrap';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { errorFormValidation } from '../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../redux/slices/authSlice';
+import { selectIsLoading } from '../../redux/selectors/authSelectors';
 
 const LogIn = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [validated, setValidated] = useState(false);
 
@@ -19,6 +26,11 @@ const LogIn = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    } else {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      dispatch(loginUser(formData));
     }
 
     setValidated(true);
@@ -37,7 +49,12 @@ const LogIn = () => {
       >
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter your email" required />
+          <Form.Control
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            required
+          />
           <Form.Control.Feedback type="invalid">
             {errorFormValidation.email}
           </Form.Control.Feedback>
@@ -49,6 +66,7 @@ const LogIn = () => {
             <Form.Control
               type={isShowPassword ? 'text' : 'password'}
               placeholder="Enter your password"
+              name="password"
               required
             />
             <span onClick={handleShowPassword} className="password-icon">
@@ -69,7 +87,7 @@ const LogIn = () => {
           Forgot password?
         </span>
 
-        <Button type="submit" className="submit-btn">
+        <Button disabled={isLoading} type="submit" className="submit-btn">
           Login
         </Button>
       </Form>
